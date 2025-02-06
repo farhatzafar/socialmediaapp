@@ -57,4 +57,19 @@ public class PostService {
         }
     }
 
+    public void likePost(Long postId, Long userId) {
+        User user = userRepository
+                .findById(userId)
+                .orElseThrow(
+                        ()->new IllegalArgumentException(USER_NOT_FOUND)
+                );
+        Post post = repository
+                .findById(postId)
+                .orElseThrow(
+                        ()->new IllegalArgumentException(POST_NOT_FOUND)
+                );
+        post.getLikes().add(user);
+        repository.save(post);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.socialmediaapp.demo.controller;
 
+import com.socialmediaapp.demo.controller.request.LikeRequest;
 import com.socialmediaapp.demo.controller.request.PostRequest;
 import com.socialmediaapp.demo.controller.response.PostResponse;
 import com.socialmediaapp.demo.controller.response.UserResponse;
@@ -56,6 +57,12 @@ public class PostController {
     @ResponseStatus(HttpStatus.OK)
     public void deletePost(@PathVariable Long postId) {
         service.deletePost(postId);
+    }
+
+    @PostMapping("{postId}/likes")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void likePost(@PathVariable Long postId, @RequestBody LikeRequest like) {
+        service.likePost(postId, like.getUserId());
     }
 
 }

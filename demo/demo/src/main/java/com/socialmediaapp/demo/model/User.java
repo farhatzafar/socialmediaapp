@@ -22,6 +22,14 @@ public class User {
     private String bio;
     private Timestamp createdAt;
 
+    public User(String userName, String email, String firstName, String lastName, String bio) {
+        this.userName = userName;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.bio = bio;
+    }
+
     public Long getUserId() {
         return userId;
     }

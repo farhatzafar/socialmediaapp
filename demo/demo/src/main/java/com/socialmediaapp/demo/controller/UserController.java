@@ -1,12 +1,12 @@
 package com.socialmediaapp.demo.controller;
 
+import com.socialmediaapp.demo.controller.request.PostRequest;
+import com.socialmediaapp.demo.controller.request.UserRequest;
 import com.socialmediaapp.demo.controller.response.UserResponse;
 import com.socialmediaapp.demo.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,5 +37,12 @@ public class UserController {
                         .map(UserResponse::toResponse)
                         .orElse(null)
         );
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createUser(@RequestBody UserRequest user) {
+        service.createUser(user.getUserName(), user.getEmail(), user.getFirstName(),
+                user.getLastName(), user.getBio());
     }
 }
