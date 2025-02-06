@@ -55,4 +55,12 @@ public class Post {
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     Set<User> likes;
+
+    public Post(String content, User author) {
+        this.content = content;
+        this.author = author;
+    }
+
+    public Post() {
+    }
 }

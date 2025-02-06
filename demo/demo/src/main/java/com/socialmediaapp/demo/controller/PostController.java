@@ -1,14 +1,13 @@
 package com.socialmediaapp.demo.controller;
 
+import com.socialmediaapp.demo.controller.request.PostRequest;
 import com.socialmediaapp.demo.controller.response.PostResponse;
 import com.socialmediaapp.demo.controller.response.UserResponse;
 import com.socialmediaapp.demo.service.PostService;
 import com.socialmediaapp.demo.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,6 +38,24 @@ public class PostController {
                         .map(PostResponse::toResponse)
                         .orElse(null)
         );
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createPost(@RequestBody PostRequest post) {
+        service.createPost(post.getContent(), post.getAuthorId());
+    }
+
+    @PutMapping("{postId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void updatePost(@PathVariable Long postId, @RequestBody PostRequest post) {
+        service.updatePost(post.getContent(), post.getAuthorId(), postId);
+    }
+
+    @DeleteMapping("{postId}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deletePost(@PathVariable Long postId) {
+        service.deletePost(postId);
     }
 
 }

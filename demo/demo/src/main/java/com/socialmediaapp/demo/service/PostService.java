@@ -1,6 +1,7 @@
 package com.socialmediaapp.demo.service;
 
 import com.socialmediaapp.demo.model.Post;
+import com.socialmediaapp.demo.model.User;
 import com.socialmediaapp.demo.repository.PostJPARepository;
 import com.socialmediaapp.demo.repository.UserJPARepository;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,33 @@ public class PostService {
 
     public Optional<Post> findPostById(Long postId) {
         return repository.findById(postId);
+    }
+
+    public void createPost(String content, Long authorId) {
+        User author = userRepository
+                .findById(authorId)
+                .orElseThrow(
+                        ()->new IllegalArgumentException(USER_NOT_FOUND)
+                );
+        repository.save(new Post(content, author));
+    }
+
+    public void deletePost(Long postId) {
+        Post post = repository
+                .findById(postId)
+                .orElseThrow(()->new IllegalArgumentException(POST_NOT_FOUND));
+        repository.delete(post);
+    }
+
+    public void updatePost(String content, Long authorId, Long postId) {
+        Post post = repository.findById(postId)
+                .orElseThrow(()->new IllegalArgumentException(POST_NOT_FOUND));
+        if (authorId.equals(post.getAuthor().getUserId())) {
+            post.setContent(content);
+            repository.save(post);
+        } else {
+            throw new IllegalArgumentException(POST_NOT_FOUND);
+        }
     }
 
 }
