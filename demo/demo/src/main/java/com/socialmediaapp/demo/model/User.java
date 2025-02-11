@@ -30,6 +30,9 @@ public class User {
         this.bio = bio;
     }
 
+    public User() {
+    }
+
     public Long getUserId() {
         return userId;
     }

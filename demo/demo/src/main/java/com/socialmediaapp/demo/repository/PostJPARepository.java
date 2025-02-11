@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PostJPARepository extends JpaRepository<Post, Long> {
 
-    List<Post> findByContentContainingIgnoreClass(String keyword);
+//    List<Post> findByContentContainingIgnoreClass(String keyword);
 }
